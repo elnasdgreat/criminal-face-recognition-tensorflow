@@ -83,6 +83,7 @@ def main(args):
                             show_name(frame, aligned_list, name_list)
                             #print(cur_time - prev_time)
 
+
                         # add the stamp
                         stamp += 1
 
@@ -90,10 +91,10 @@ def main(args):
                     cv2.imshow('frame', frame)
 
                     #calculating frames per second (fps)
-                    sec = cur_time - prev_time
+                    #sec = cur_time - prev_time
                     prev_time = cur_time
-                    fps = 1 / (sec)
-                    print('FPS: %2.3f' % fps)
+                    #fps = 1 / (sec)
+                    #print('FPS: %2.3f' % fps)
 
                     # keyboard event
                     k = cv2.waitKey(1) & 0xFF

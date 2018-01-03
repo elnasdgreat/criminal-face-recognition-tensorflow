@@ -5,6 +5,7 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import os
+from datetime import datetime
 import pickle
 from scipy import misc
 import facenet
@@ -109,9 +110,10 @@ def identify_face(sess, frame, aligned_list, classifier, class_names):
             print('<ERROR> %s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
         else:
             print('%s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
-        if best_class_prob[i] > 0.6: #only adds name if confidence lvl of the recognition is 0.6 and above
+        if best_class_prob[i] > 0.6: # adds name if confidence lvl of the recognition is 0.6 and above
             name_list.append(class_names[best_class_indices[i]])
-        else: #else adds an empty string
+            print(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) # print current system date & time
+        else: # else adds an empty string
             name_list.append("")
     print('-----')
 
