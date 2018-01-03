@@ -88,7 +88,12 @@ def main(args):
 
                     # Display the resulting frame
                     cv2.imshow('frame', frame)
+
+                    #calculating frames per second (fps)
+                    sec = cur_time - prev_time
                     prev_time = cur_time
+                    fps = 1 / (sec)
+                    print('FPS: %2.3f' % fps)
 
                     # keyboard event
                     k = cv2.waitKey(1) & 0xFF
@@ -115,7 +120,7 @@ def show_name(frame, aligned_list, name_list):
                 cv2.rectangle(frame, (face_pos[0], face_pos[1]), (face_pos[2], face_pos[3]), (0, 255, 0), 2)
                 cv2.putText(frame, name_list[i], (face_pos[0], face_pos[1] - 30),
                             cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), thickness=2, lineType=2)
-                cv2.imwrite("%s.jpg" % name_list[i], frame) # saves the frame on detection; filename is the name of the recognized face
+                #cv2.imwrite("%s.jpg" % name_list[i], frame) # saves the frame on detection; filename is the name of the recognized face
             i += 1
 
 
