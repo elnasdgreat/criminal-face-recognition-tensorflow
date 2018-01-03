@@ -1,0 +1,5 @@
+pyuic5.bat -x m.ui -o m.py
+
+    for i in range(30):
+        item = QtWidgets.QListWidgetItem("Item %i" % i)
+        ui.highList.addItem(item)

@@ -27,7 +27,7 @@ def main(args):
             classifier, class_names = identify_face.restore_classifier(args.classifier)
 
             # load the camera
-            cap = cv2.VideoCapture(0)
+            cap = cv2.VideoCapture('http://192.168.1.7:8080')
 
 
             if args.mode == 'ONLY_DETECT':

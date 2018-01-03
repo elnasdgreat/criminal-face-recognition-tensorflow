@@ -112,7 +112,7 @@ def identify_face(sess, frame, aligned_list, classifier, class_names):
             print('%s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
         if best_class_prob[i] > 0.6: # adds name if confidence lvl of the recognition is 0.6 and above
             name_list.append(class_names[best_class_indices[i]])
-            print(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) # print current system date & time
+            #print(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) # print current system date & time
         else: # else adds an empty string
             name_list.append("")
     print('-----')
