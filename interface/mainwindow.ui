@@ -27,7 +27,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">.QWidget {
-	background-color: #c62626
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(211, 16, 39, 255), stop:1 rgba(234, 56, 77, 255));
 }</string>
    </property>
    <widget class="QLabel" name="appName">
@@ -43,6 +43,7 @@
      <font>
       <family>Calibri</family>
       <pointsize>16</pointsize>
+      <underline>false</underline>
       <stylestrategy>PreferAntialias</stylestrategy>
       <kerning>true</kerning>
      </font>
@@ -59,7 +60,7 @@
      <number>3</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="addRecordBtn">
+   <widget class="QPushButton" name="btnAddRecord">
     <property name="geometry">
      <rect>
       <x>474</x>
@@ -81,23 +82,36 @@
     </property>
     <property name="styleSheet">
      <string notr="true">.QPushButton {
-	border: none;
+	border: 2px solid #ff3b3b;
+	border-radius: 3px;
 	color: #fff;
-	background-color: #e53935;
+	background-color: transparent;
+	
 }
 
 .QPushButton:pressed {
-	background-color: #c62626;
+	background-color: #ff3b3b;
+	border: none;
 }</string>
     </property>
     <property name="text">
-     <string>ADD NEW RECORD</string>
+     <string>  ADD NEW RECORD</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>icons/plus-white-symbol.png</normaloff>icons/plus-white-symbol.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>10</width>
+      <height>10</height>
+     </size>
     </property>
     <property name="flat">
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="startBtn">
+   <widget class="QPushButton" name="btnStart">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -110,8 +124,8 @@
      <font>
       <family>Calibri</family>
       <pointsize>20</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
+      <weight>50</weight>
+      <bold>false</bold>
      </font>
     </property>
     <property name="cursor">
@@ -119,41 +133,36 @@
     </property>
     <property name="styleSheet">
      <string notr="true">.QPushButton {
-	border: none;
+	border: 2px solid #ff3b3b;
+	border-radius: 3px;
 	color: #fff;
-	background-color: #e53935;
+	background-color: transparent;
+	
 }
 
 .QPushButton:pressed {
-	background-color: #c62626;
+	background-color: #ff3b3b;
+	border: none;
 }</string>
     </property>
     <property name="text">
-     <string>S T A R T</string>
+     <string>  S T A R T</string>
     </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>281</width>
-      <height>301</height>
-     </rect>
+    <property name="icon">
+     <iconset>
+      <normaloff>icons/screenshot.png</normaloff>icons/screenshot.png</iconset>
     </property>
-    <property name="styleSheet">
-     <string notr="true">.QLabel {
-	background-color: #e53935;
-}</string>
-    </property>
-    <property name="text">
-     <string/>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
     </property>
    </widget>
    <widget class="QLabel" name="highLabel">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>347</x>
       <y>60</y>
       <width>291</width>
       <height>41</height>
@@ -178,8 +187,11 @@
     <property name="scaledContents">
      <bool>false</bool>
     </property>
+    <property name="indent">
+     <number>8</number>
+    </property>
    </widget>
-   <widget class="QListWidget" name="highList">
+   <widget class="QListWidget" name="listHigh">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -195,9 +207,10 @@
     </property>
     <property name="styleSheet">
      <string notr="true">.QListWidget {
-	border: none;
+	border: 2px solid #ff3b3b;
+	border-radius: 3px;
 	color: #fff;
-	background-color: #e53935;
+	background-color: transparent;
 }
 </string>
     </property>
@@ -223,7 +236,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="labelBorder">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -234,7 +247,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">.QLabel {
-	background-color: #e53935;
+	background-color: #fff;
 }</string>
     </property>
     <property name="text">
@@ -244,7 +257,7 @@
    <widget class="QLabel" name="lowLabel">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>347</x>
       <y>290</y>
       <width>291</width>
       <height>31</height>
@@ -269,8 +282,11 @@
     <property name="scaledContents">
      <bool>false</bool>
     </property>
+    <property name="indent">
+     <number>8</number>
+    </property>
    </widget>
-   <widget class="QListWidget" name="lowList">
+   <widget class="QListWidget" name="listLow">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -286,9 +302,10 @@
     </property>
     <property name="styleSheet">
      <string notr="true">.QListWidget {
-	border: none;
+	border: 2px solid #ff3b3b;
+	border-radius: 3px;
 	color: #fff;
-	background-color: #e53935;
+	background-color: transparent;
 }
 </string>
     </property>
@@ -312,6 +329,355 @@
     </property>
     <property name="sortingEnabled">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelVidInput">
+    <property name="geometry">
+     <rect>
+      <x>47</x>
+      <y>60</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QLabel {
+	color: #fff;
+}</string>
+    </property>
+    <property name="text">
+     <string>V I D E O   I N P U T</string>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radUsbCam">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QRadioButton {
+	color: #fff;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>USB CAM</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radIpCam">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>190</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QRadioButton {
+	color: #fff;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>IP CAM</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radVidFile">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>270</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QRadioButton {
+	color: #fff;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>VIDEO FILE</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="spinBoxUsbCam">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>281</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Change this value if you have more than 1 camera connected via USB. 0 is the default value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QSpinBox {
+	color: #fff;
+	border: 2px solid #ff3b3b;
+	border-radius: 2px;
+	background-color: transparent;
+}</string>
+    </property>
+    <property name="suffix">
+     <string> (0 default)</string>
+    </property>
+    <property name="prefix">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineIpCam">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>220</y>
+      <width>281</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter this to the link of the IP Camera you want to use.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QLineEdit {
+	color: #fff;
+	border: 2px solid #ff3b3b;
+	border-radius: 2px;
+	background-color: transparent;
+}</string>
+    </property>
+    <property name="text">
+     <string>http://</string>
+    </property>
+    <property name="maxLength">
+     <number>32767</number>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineVidFile">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>300</y>
+      <width>281</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enter the path of the video file you want to use. Click the 'browse file' to locate the video.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QLineEdit {
+	color: #fff;
+	border: 2px solid #ff3b3b;
+	border-radius: 2px;
+	background-color: transparent;
+}</string>
+    </property>
+    <property name="text">
+     <string>C:/</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnBrowseFile">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>330</y>
+      <width>61</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>8</pointsize>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QPushButton {
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	background-color: transparent;
+}
+
+.QPushButton:pressed {
+	color: #820707;
+}
+</string>
+    </property>
+    <property name="text">
+     <string>BROWSE FILE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelCaretUp">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>73</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>icons/caret-arrow-up.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="margin">
+     <number>1</number>
+    </property>
+    <property name="indent">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelCaretDown">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>298</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>icons/caret-down.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="margin">
+     <number>1</number>
+    </property>
+    <property name="indent">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelCamIco">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>73</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">.QLabel {
+	color: #fff;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>icons/photo-camera.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelOpenFolder">
+    <property name="geometry">
+     <rect>
+      <x>222</x>
+      <y>336</y>
+      <width>12</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>icons/open-folder.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
