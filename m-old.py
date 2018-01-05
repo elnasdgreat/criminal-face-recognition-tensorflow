@@ -7,6 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import camera
+import threading
+import subprocess
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -64,6 +67,7 @@ class Ui_MainWindow(object):
         self.btnAddRecord.setFlat(False)
         self.btnAddRecord.setObjectName("btnAddRecord")
         self.btnStart = QtWidgets.QPushButton(self.centralwidget)
+        self.btnStart.clicked.connect(self.start_camera)
         self.btnStart.setGeometry(QtCore.QRect(20, 390, 281, 71))
         font = QtGui.QFont()
         font.setFamily("Calibri")
@@ -104,7 +108,7 @@ class Ui_MainWindow(object):
         self.highLabel.setIndent(8)
         self.highLabel.setObjectName("highLabel")
         self.listHigh = QtWidgets.QListWidget(self.centralwidget)
-        self.listHigh.setGeometry(QtCore.QRect(330, 104, 291, 181))
+        self.listHigh.setGeometry(QtCore.QRect(330, 100, 291, 181))
         font = QtGui.QFont()
         font.setPointSize(9)
         self.listHigh.setFont(font)
@@ -173,11 +177,6 @@ class Ui_MainWindow(object):
 "}")
         self.labelVidInput.setScaledContents(False)
         self.labelVidInput.setObjectName("labelVidInput")
-
-
-        self.vidInputGrp = QtWidgets.QButtonGroup(self.centralwidget)
-        
-        
         self.radUsbCam = QtWidgets.QRadioButton(self.centralwidget)
         self.radUsbCam.setGeometry(QtCore.QRect(20, 110, 131, 17))
         font = QtGui.QFont()
@@ -216,13 +215,6 @@ class Ui_MainWindow(object):
 "}\n"
 "")
         self.radVidFile.setObjectName("radVidFile")
-
-
-        self.vidInputGrp.addButton(self.radUsbCam,1)
-        self.vidInputGrp.addButton(self.radIpCam,2)
-        self.vidInputGrp.addButton(self.radVidFile,3)
-
-        
         self.spinBoxUsbCam = QtWidgets.QSpinBox(self.centralwidget)
         self.spinBoxUsbCam.setEnabled(True)
         self.spinBoxUsbCam.setGeometry(QtCore.QRect(20, 140, 281, 31))
@@ -343,7 +335,19 @@ class Ui_MainWindow(object):
         self.lineVidFile.setText(_translate("MainWindow", "C:/"))
         self.btnBrowseFile.setText(_translate("MainWindow", "BROWSE FILE"))
 
+    def start_camera(self):
+        # threading
+        print(type(self))
+        def callback():
+            #camera.main(camera.parse_arguments(['ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', '--interval=1', '--minsize=80', self]))
+            camera.main('ALL','pre-trained/20170512-110547.pb','classifier.pkl',10,80,self)
 
+        t = threading.Thread(target=callback)
+        t.start()
+
+        # direct call
+        #camera.main(camera.parse_arguments(['ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', '--interval=1', '--minsize=80']))
+        
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

@@ -7,7 +7,7 @@ import cv2
 import identify_face
 
 
-def main(mode, model, classifier, interval, minsize, captureMode, window):
+def main(args):
     stamp = 0
     prev_time = 0
 
@@ -24,13 +24,13 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
             pnet, rnet, onet = identify_face.restore_mtcnn_model()
 
             # restore the classifier
-            classifier, class_names = identify_face.restore_classifier(classifier)
+            classifier, class_names = identify_face.restore_classifier(args.classifier)
 
             # load the camera
-            cap = cv2.VideoCapture(captureMode)
-            
+            cap = cv2.VideoCapture(0)
 
-            if mode == 'ONLY_DETECT':
+
+            if args.mode == 'ONLY_DETECT':
                 while cap.isOpened():
                     # Capture frame-by-frame
                     ret, frame = cap.read()
@@ -38,7 +38,7 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
 
                     # face detect
                     cur_time = time.time()
-                    aligned_list = identify_face.align_mtcnn(rgb, pnet, rnet, onet, minsize)
+                    aligned_list = identify_face.align_mtcnn(rgb, pnet, rnet, onet, args.minsize)
 
                     if len(aligned_list) > 0:
                         # boxed the face
@@ -57,10 +57,10 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
                     elif k == ord('q'):
                         break
 
-            if mode == 'ALL':
+            if args.mode == 'ALL':
                 # restore facenet model
-                identify_face.restore_facenet_model(model)
-                window.btnStart.setText("  Running...")
+                identify_face.restore_facenet_model(args.model)
+
                 while cap.isOpened():
                     # Capture frame-by-frame
                     ret, frame = cap.read()
@@ -69,7 +69,7 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
 
                     # face detect
                     cur_time = time.time()
-                    aligned_list = identify_face.align_mtcnn(rgb, pnet, rnet, onet, minsize)
+                    aligned_list = identify_face.align_mtcnn(rgb, pnet, rnet, onet, args.minsize)
 
                     if len(aligned_list) > 0:
                         # boxed the face
@@ -77,8 +77,8 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
                             #cv2.rectangle(frame, (face_pos[0], face_pos[1]), (face_pos[2], face_pos[3]), (0, 255, 0), 2)
 
                         # face identify
-                        if stamp % interval == 0:
-                            name_list = identify_face.identify_face(sess, rgb, aligned_list, classifier, class_names, window)
+                        if stamp % args.interval == 0:
+                            name_list = identify_face.identify_face(sess, rgb, aligned_list, classifier, class_names)
                             # show users' name
                             show_name(frame, aligned_list, name_list)
                             #print(cur_time - prev_time)
@@ -102,8 +102,6 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
                         print('save')
                         misc.imsave('%s.jpg' % time.strftime("%Y%m%d_%H%M%S", time.localtime()), rgb)
                     elif k == ord('q'):
-                        window.btnStart.setText("  S T A R T")
-                        window.btnStart.setEnabled(True);
                         break
 
         # When everything done, release the capture

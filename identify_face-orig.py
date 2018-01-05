@@ -10,7 +10,6 @@ import pickle
 from scipy import misc
 import facenet
 import detect_face
-from PyQt5 import QtWidgets
 
 img_size = 160
 
@@ -87,7 +86,7 @@ def get_face_in_frame(frame, aligned_list):
     return images
 
 
-def identify_face(sess, frame, aligned_list, classifier, class_names, window):
+def identify_face(sess, frame, aligned_list, classifier, class_names):
     # get input and output tensors
     images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
     embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
@@ -109,16 +108,13 @@ def identify_face(sess, frame, aligned_list, classifier, class_names, window):
     for i in range(len(best_class_indices)):
         if class_names[best_class_indices[i]] == 'others':
             print('<ERROR> %s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
-        elif best_class_prob[i] < 0.6 :
-            name_list.append("")
-            window.listLow.addItem('{:0.2f} : {} -- {}'.format(best_class_prob[i], class_names[best_class_indices[i]], datetime.now().strftime('%H:%M:%S')))          
+        else:
             print('%s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
-        elif best_class_prob[i] >= 0.6: # adds name if confidence lvl of the recognition is 0.6 and above
-            window.listHigh.addItem('{:0.2f} : {} -- {}'.format(best_class_prob[i], class_names[best_class_indices[i]], datetime.now().strftime('%H:%M:%S')))   
+        if best_class_prob[i] > 0.6: # adds name if confidence lvl of the recognition is 0.6 and above
             name_list.append(class_names[best_class_indices[i]])
             #print(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) # print current system date & time
-        #else: # else adds an empty string
-            #name_list.append("")
+        else: # else adds an empty string
+            name_list.append("")
     print('-----')
 
     return name_list

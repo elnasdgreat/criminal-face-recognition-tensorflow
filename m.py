@@ -7,8 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import threading
+import camera
 
 class Ui_MainWindow(object):
+    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
@@ -64,6 +67,7 @@ class Ui_MainWindow(object):
         self.btnAddRecord.setFlat(False)
         self.btnAddRecord.setObjectName("btnAddRecord")
         self.btnStart = QtWidgets.QPushButton(self.centralwidget)
+        self.btnStart.clicked.connect(self.start_camera)
         self.btnStart.setGeometry(QtCore.QRect(20, 390, 281, 71))
         font = QtGui.QFont()
         font.setFamily("Calibri")
@@ -175,8 +179,10 @@ class Ui_MainWindow(object):
         self.labelVidInput.setObjectName("labelVidInput")
 
 
+        # create radio buttons group
         self.vidInputGrp = QtWidgets.QButtonGroup(self.centralwidget)
-        
+
+
         
         self.radUsbCam = QtWidgets.QRadioButton(self.centralwidget)
         self.radUsbCam.setGeometry(QtCore.QRect(20, 110, 131, 17))
@@ -218,9 +224,15 @@ class Ui_MainWindow(object):
         self.radVidFile.setObjectName("radVidFile")
 
 
+
+
+        # add radio buttons to group
         self.vidInputGrp.addButton(self.radUsbCam,1)
         self.vidInputGrp.addButton(self.radIpCam,2)
         self.vidInputGrp.addButton(self.radVidFile,3)
+
+
+
 
         
         self.spinBoxUsbCam = QtWidgets.QSpinBox(self.centralwidget)
@@ -255,6 +267,7 @@ class Ui_MainWindow(object):
 "}")
         self.lineVidFile.setObjectName("lineVidFile")
         self.btnBrowseFile = QtWidgets.QPushButton(self.centralwidget)
+        self.btnBrowseFile.clicked.connect(self.browse_vid_file)
         self.btnBrowseFile.setGeometry(QtCore.QRect(240, 330, 61, 23))
         font = QtGui.QFont()
         font.setFamily("Calibri")
@@ -343,6 +356,42 @@ class Ui_MainWindow(object):
         self.lineVidFile.setText(_translate("MainWindow", "C:/"))
         self.btnBrowseFile.setText(_translate("MainWindow", "BROWSE FILE"))
 
+    def start_camera(self):
+        captureMode = self.check_vid_input()        
+        
+        self.btnStart.setText("  Starting...")
+        self.btnStart.setEnabled(False);
+        
+        # threading
+        def callback():
+            #camera.main(camera.parse_arguments(['ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', '--interval=1', '--minsize=80', self]))
+            camera.main('ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', 10, 80, captureMode, self)
+
+        t = threading.Thread(target=callback)
+        t.start()
+
+        # direct call
+        #camera.main(camera.parse_arguments(['ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', '--interval=1', '--minsize=80']))
+
+    def browse_vid_file(self):
+        filter = "images (*.mp4)"
+        file_name = QtWidgets.QFileDialog()
+        file_name.setFileMode(QtWidgets.QFileDialog.ExistingFiles)
+        name = file_name.getOpenFileName(self.centralwidget, "Select Video File", "", filter)
+        self.lineVidFile.setText(name[0])  
+
+    def check_vid_input(self):
+        choice = self.vidInputGrp.checkedId()
+
+        if(choice == 1):
+            captureMode = self.spinBoxUsbCam.value()
+        elif(choice == 2):
+            captureMode = self.lineIpCam.text()
+        elif(choice == 3):
+            captureMode = self.lineVidFile.text()
+
+        return captureMode
+            
 
 if __name__ == "__main__":
     import sys
