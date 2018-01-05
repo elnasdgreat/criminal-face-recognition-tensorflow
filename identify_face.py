@@ -111,10 +111,10 @@ def identify_face(sess, frame, aligned_list, classifier, class_names, window):
             print('<ERROR> %s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
         elif best_class_prob[i] < 0.6 :
             name_list.append("")
-            window.listLow.addItem('{:0.2f} : {} -- {}'.format(best_class_prob[i], class_names[best_class_indices[i]], datetime.now().strftime('%H:%M:%S')))          
+            window.listLow.addItem('{:0.2f}  |  {}  |  {}'.format(best_class_prob[i], datetime.now().strftime('%H:%M:%S'), class_names[best_class_indices[i]]))          
             print('%s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
         elif best_class_prob[i] >= 0.6: # adds name if confidence lvl of the recognition is 0.6 and above
-            window.listHigh.addItem('{:0.2f} : {} -- {}'.format(best_class_prob[i], class_names[best_class_indices[i]], datetime.now().strftime('%H:%M:%S')))   
+            window.listHigh.addItem('{:0.2f}  |  {}  |  {}'.format(best_class_prob[i], datetime.now().strftime('%H:%M:%S'), class_names[best_class_indices[i]]))   
             name_list.append(class_names[best_class_indices[i]])
             #print(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) # print current system date & time
         #else: # else adds an empty string

@@ -46,7 +46,7 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
                             cv2.rectangle(frame, (face_pos[0], face_pos[1]), (face_pos[2], face_pos[3]), (0, 255, 0), 2)
 
                     # Display the resulting frame
-                    cv2.imshow('frame', frame)
+                    cv2.imshow('Video', frame)
                     prev_time = cur_time
 
                     # keyboard event

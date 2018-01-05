@@ -14,7 +14,7 @@ class Ui_MainWindow(object):
     
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(640, 480)
+        MainWindow.setFixedSize(640, 480)
         MainWindow.setAnimated(True)
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -365,7 +365,7 @@ class Ui_MainWindow(object):
         # threading
         def callback():
             #camera.main(camera.parse_arguments(['ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', '--interval=1', '--minsize=80', self]))
-            camera.main('ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', 10, 80, captureMode, self)
+            camera.main('ALL', 'pre-trained/20170512-110547.pb', 'classifier.pkl', 3, 80, captureMode, self)
 
         t = threading.Thread(target=callback)
         t.start()
