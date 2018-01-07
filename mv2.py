@@ -569,9 +569,9 @@ class Ui_MainWindow(object):
         self.lblFPSVal.setText(_translate("MainWindow", "-----"))
         self.btnSettings.setText(_translate("MainWindow", "SETTINGS"))
         self.lblCamNo.setText(_translate("MainWindow", "CAM NO:"))
-        self.lblCamNoVal.setText(_translate("MainWindow", "000"))
+        self.lblCamNoVal.setText(_translate("MainWindow", "---"))
         self.lblStationId.setText(_translate("MainWindow", "STATION ID:"))
-        self.lblStationIdVal.setText(_translate("MainWindow", "000000000"))
+        self.lblStationIdVal.setText(_translate("MainWindow", "-----------"))
         self.lblLoggingVal.setText(_translate("MainWindow", "disabled"))
         self.lblLogging.setText(_translate("MainWindow", "LOGGING:"))
 
