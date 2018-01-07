@@ -5,6 +5,7 @@ import sys
 from scipy import misc
 import cv2
 import identify_face
+from datetime import datetime
 
 
 def main(mode, model, classifier, interval, minsize, captureMode, window):
@@ -60,7 +61,11 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
             if mode == 'ALL':
                 # restore facenet model
                 identify_face.restore_facenet_model(model)
+                
                 window.btnStart.setText("  Running...")
+                window.lblRunVal.setText("Yes")
+                window.lblTimeVal.setText(datetime.now().strftime('%b %d, %y | %I:%M %p'))
+                
                 while cap.isOpened():
                     # Capture frame-by-frame
                     ret, frame = cap.read()
@@ -78,9 +83,9 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
 
                         # face identify
                         if stamp % interval == 0:
-                            name_list = identify_face.identify_face(sess, rgb, aligned_list, classifier, class_names, window)
+                            name_prob = identify_face.identify_face(sess, rgb, aligned_list, classifier, class_names, window)
                             # show users' name
-                            show_name(frame, aligned_list, name_list)
+                            show_name(frame, aligned_list, name_prob)
                             #print(cur_time - prev_time)
 
 
@@ -90,10 +95,11 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
                     # Display the resulting frame
                     cv2.imshow('frame', frame)
 
-                    #calculating frames per second (fps)
-                    #sec = cur_time - prev_time
+                    # calculating frames per second (fps)
+                    sec = cur_time - prev_time
                     prev_time = cur_time
-                    #fps = 1 / (sec)
+                    fps = 1 / (sec)
+                    window.lblFPSVal.setText('FPS: %2.3f' % fps)
                     #print('FPS: %2.3f' % fps)
 
                     # keyboard event
@@ -104,6 +110,8 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
                     elif k == ord('q'):
                         window.btnStart.setText("  S T A R T")
                         window.btnStart.setEnabled(True);
+                        window.lblRunVal.setText("Stopped")
+                        window.lblFPSVal.setText("-----")
                         break
 
         # When everything done, release the capture
@@ -111,18 +119,22 @@ def main(mode, model, classifier, interval, minsize, captureMode, window):
         cv2.destroyAllWindows()
 
 
-def show_name(frame, aligned_list, name_list):
-    if len(name_list) > 0:
+def show_name(frame, aligned_list, name_prob):
+    if len(name_prob[0]) > 0:
         i = 0
         for face_pos in aligned_list:
-            if name_list[i] == 'others':
-                cv2.putText(frame, name_list[i], (face_pos[0], face_pos[1] - 30),
+            if name_prob[0][i] == 'others':
+                cv2.putText(frame, name_prob[0][i], (face_pos[0], face_pos[1] - 30),
                             cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), thickness=2, lineType=2)
                 cv2.rectangle(frame, (face_pos[0], face_pos[1]), (face_pos[2], face_pos[3]), (0, 0, 255), 2)
-            elif(name_list[i] != ''): # only puts boxes to those who have a confidence lvl of 0.6 and above
+            elif(name_prob[1][i] >= 0.6): # only puts boxes to those who have a confidence lvl of 0.6 and above
                 cv2.rectangle(frame, (face_pos[0], face_pos[1]), (face_pos[2], face_pos[3]), (0, 255, 0), 2)
-                cv2.putText(frame, name_list[i], (face_pos[0], face_pos[1] - 30),
-                            cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), thickness=2, lineType=2)
+                cv2.putText(frame, name_prob[0][i], (face_pos[0], face_pos[1] + 110),
+                            cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), thickness=1, lineType=2)
+            else: # only puts boxes to those who have a confidence lvl of 0.6 and above
+                cv2.rectangle(frame, (face_pos[0], face_pos[1]), (face_pos[2], face_pos[3]), (0, 138, 230), 2)
+                cv2.putText(frame, name_prob[0][i], (face_pos[0], face_pos[1] + 110),
+                            cv2.FONT_HERSHEY_PLAIN, 1, (0, 138, 230), thickness=1, lineType=2)
                 #cv2.imwrite("%s.jpg" % name_list[i], frame) # saves the frame on detection; filename is the name of the recognized face
             i += 1
 
