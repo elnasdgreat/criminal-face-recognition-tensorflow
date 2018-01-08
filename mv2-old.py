@@ -87,7 +87,6 @@ class Ui_MainWindow(object):
         self.highLabel.setIndent(8)
         self.highLabel.setObjectName("highLabel")
         self.listHigh = QtWidgets.QListWidget(self.centralwidget)
-        self.listHigh.doubleClicked.connect(self.dlbClkListItem(self.listHigh)) #double click
         self.listHigh.setGeometry(QtCore.QRect(330, 108, 291, 181))
         font = QtGui.QFont()
         font.setPointSize(9)
@@ -128,7 +127,6 @@ class Ui_MainWindow(object):
         self.lowLabel.setIndent(8)
         self.lowLabel.setObjectName("lowLabel")
         self.listLow = QtWidgets.QListWidget(self.centralwidget)
-        self.listLow.doubleClicked.connect(self.dlbClkListItem(self.listLow)) #double click
         self.listLow.setGeometry(QtCore.QRect(330, 330, 291, 131))
         font = QtGui.QFont()
         font.setPointSize(9)
@@ -541,7 +539,7 @@ class Ui_MainWindow(object):
         self.listHigh.setCurrentRow(-1)
         self.listLow.setCurrentRow(-1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Smooth Criminal"))
@@ -589,12 +587,6 @@ class Ui_MainWindow(object):
 
         t = threading.Thread(target=callback)
         t.start()
-
-    def dlbClkListItem(self, listWidget):
-        def getId():
-            print("double clicked!")
-            print(listWidget.item(listWidget.currentRow()).data(QtCore.Qt.UserRole))
-        return getId
 
     def browse_vid_file(self):
         filter = "images (*.mp4)"

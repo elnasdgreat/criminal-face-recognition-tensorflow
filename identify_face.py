@@ -10,7 +10,7 @@ import pickle
 from scipy import misc
 import facenet
 import detect_face
-from PyQt5 import QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 img_size = 160
 
@@ -107,6 +107,10 @@ def identify_face(sess, frame, aligned_list, classifier, class_names, window):
 
     name_list = []
     for i in range(len(best_class_indices)):
+        item = QtWidgets.QListWidgetItem()
+        item.setData(QtCore.Qt.UserRole, class_names[best_class_indices[i]])
+        
+        #print("d---"+item.data(QtCore.Qt.UserRole))
         if class_names[best_class_indices[i]] == 'others':
             print('<ERROR> %s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
         #elif best_class_prob[i] < 0.6 :
@@ -115,9 +119,11 @@ def identify_face(sess, frame, aligned_list, classifier, class_names, window):
             #print('%s: %.3f' % (class_names[best_class_indices[i]], best_class_prob[i]))
         else: # adds name if confidence lvl of the recognition is 0.6 and above
             if best_class_prob[i] < 0.6:
-                window.listLow.addItem('{:0.2f}  |  {}  |  {}'.format(best_class_prob[i], datetime.now().strftime('%H:%M:%S'), class_names[best_class_indices[i]]))
+                item.setText('{:0.2f}  |  {}  |  {}'.format(best_class_prob[i], datetime.now().strftime('%H:%M:%S'), class_names[best_class_indices[i]]))
+                window.listLow.addItem(item)
             else:
-                window.listHigh.addItem('{:0.2f}  |  {}  |  {}'.format(best_class_prob[i], datetime.now().strftime('%H:%M:%S'), class_names[best_class_indices[i]]))   
+                item.setText('{:0.2f}  |  {}  |  {}'.format(best_class_prob[i], datetime.now().strftime('%H:%M:%S'), class_names[best_class_indices[i]]))  
+                window.listHigh.addItem(item)
             name_list.append(class_names[best_class_indices[i]])
             #print(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) # print current system date & time
         #else: # else adds an empty string
