@@ -597,7 +597,7 @@ class Ui_MainWindow(object):
         return getId
 
     def browse_vid_file(self):
-        filter = "images (*.mp4)"
+        filter = "video (*.mp4)"
         file_name = QtWidgets.QFileDialog()
         file_name.setFileMode(QtWidgets.QFileDialog.ExistingFiles)
         name = file_name.getOpenFileName(self.centralwidget, "Select Video File", "", filter)
